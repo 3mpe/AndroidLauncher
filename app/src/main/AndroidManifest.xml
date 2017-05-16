@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
             android:launchMode="singleTask"

@@ -1,8 +1,5 @@
 package com.example.a3mpe.androidlauncher;
 
-/**
- * Created by Gaaraj on 15.05.2017.
- */
 
 public class SortApps {
     public void exchange_sort(MainActivity.Pac[] pacs) {
