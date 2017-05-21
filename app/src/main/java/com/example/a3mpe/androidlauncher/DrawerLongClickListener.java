@@ -30,14 +30,14 @@ public class DrawerLongClickListener implements AdapterView.OnItemLongClickListe
 
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
         MainActivity.appLaunchable = false;
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(view.getWidth(), view.getHeight());
         layoutParams.leftMargin = (int) (view.getX());
         layoutParams.rightMargin = (int) (view.getY());
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.drawer_item, null);
+        final LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.drawer_item, null);
 
         ImageView iconImage = (ImageView) linearLayout.findViewById(R.id.icon_image);
         TextView iconText = (TextView) linearLayout.findViewById(R.id.icon_text);
@@ -45,7 +45,14 @@ public class DrawerLongClickListener implements AdapterView.OnItemLongClickListe
         iconImage.setImageDrawable(iconImage.getDrawable());
         iconText.setText(iconText.getText());
 
-        linearLayout.setOnTouchListener(new AppTouchListener(view.getWidth()));
+        linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                v.setOnTouchListener(new AppTouchListener());
+                return false;
+            }
+        });
+        linearLayout.setOnTouchListener(new AppTouchListener());
         linearLayout.setOnClickListener(new AppClickListener(context, pacsForListener));
         String[] data = new String[2];
         data[0] = pacsForListener[position].packageName;
