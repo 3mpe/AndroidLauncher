@@ -19,11 +19,13 @@ public class DrawerLongClickListener implements AdapterView.OnItemLongClickListe
     Context context;
     SlidingDrawer slidingDrawer;
     RelativeLayout relativeLayout;
+    MainActivity.Pac[] pacsForListener;
 
-    public DrawerLongClickListener(Context context, SlidingDrawer slidingDrawer, RelativeLayout relativeLayout) {
+    public DrawerLongClickListener(Context context, SlidingDrawer slidingDrawer, RelativeLayout relativeLayout, MainActivity.Pac[] pacs) {
         this.context = context;
         this.slidingDrawer = slidingDrawer;
         this.relativeLayout = relativeLayout;
+        this.pacsForListener = pacs;
     }
 
 
@@ -43,6 +45,12 @@ public class DrawerLongClickListener implements AdapterView.OnItemLongClickListe
         iconImage.setImageDrawable(iconImage.getDrawable());
         iconText.setText(iconText.getText());
 
+        linearLayout.setOnTouchListener(new AppTouchListener(view.getWidth()));
+        linearLayout.setOnClickListener(new AppClickListener(context, pacsForListener));
+        String[] data = new String[2];
+        data[0] = pacsForListener[position].packageName;
+        data[1] = pacsForListener[position].name;
+        linearLayout.setTag(data);
         relativeLayout.addView(linearLayout, layoutParams);
         // relativeLayout.animateClose();
         relativeLayout.bringToFront();

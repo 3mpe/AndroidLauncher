@@ -1,5 +1,6 @@
 package com.example.a3mpe.androidlauncher;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,7 +23,10 @@ public class DrawerClickListener implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (MainActivity.appLaunchable) {
-            Intent launchIntent = pm.getLaunchIntentForPackage(pacs[position].name);
+            Intent launchIntent = new Intent(Intent.ACTION_MAIN);
+            launchIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            ComponentName cp = new ComponentName(pacs[position].packageName, pacs[position].name);
+            launchIntent.setComponent(cp);
             context.startActivity(launchIntent);
         }
     }
